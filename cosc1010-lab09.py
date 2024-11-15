@@ -1,10 +1,10 @@
-# Your Name Here
+# Luna Perez
 # UWYO COSC 1010
-# Submission Date
-# Lab XX
-# Lab Section:
-# Sources, people worked with, help given to:
-# Your
+# Submission Date 11/15/2024    
+# Lab 09
+# Lab Section: 13
+# Sources, people worked with, help given to: TA ben wilkin, the join operator https://www.w3schools.com/python/ref_string_join.asp
+# lecture 12 slides. 
 # Comments
 # Here
 
@@ -36,6 +36,9 @@
 # - Create the toppings attribute, starting off as a list only holding cheese.
 
 
+
+             
+        
 # You will be creating a Pizzeria class with the following attributes:
 # - orders, the number of orders placed. Should start at 0.
 # - price_per_topping, a static value for the price per topping of 0.30.
@@ -59,7 +62,7 @@
 #   - Upon completion, create the pizza object and store it in the list.
 # - getPrice()
 #   - You will need to determine the price of the pizza.
-#   - This will be (pizza.getSize() * price_per_inch) + pizza.getAmountOfToppings() * price_per_topping.
+#   - This will be .
 #   - You will have to retrieve the pizza from the pizza list.
 # - getReceipt()
 #   - Creates a receipt of the current pizza.
@@ -103,3 +106,113 @@ Your total price is $12.9
 
 Would you like to place an order? exit to exit
 """
+class Pizza:
+    '''A pizza order '''
+    def __init__(self,size,sauce=''):
+        '''initalize the order'''      
+        self.sauce = self.pizza_sauce(sauce)
+        self.topping = ['cheese']
+        self.size = self.pizza_size(size)
+        
+        
+    def pizza_size(self,size):
+        '''Check the pizza size'''
+        if not size.isnumeric() or int(size) <10: 
+            print("our smallest is a 10 inch setting to small")
+            self.size = 10
+            return self.size
+        
+        
+        else:
+            self.size= int(size)
+            return int(size)
+    def get_size(self):
+        '''size retreval command'''
+        return self.size
+    def add_toppings(self,topping):
+        '''topping adding method'''
+        if topping not in self.topping:
+            self.topping.append(topping)
+    def get_toppings(self):
+        '''topping retreval method'''
+        return self.topping
+    def getammount(self):
+        '''topping count retreval method'''
+        return len(self.topping)
+    def pizza_sauce(self,sauce):
+         '''Check the sauce'''
+         if sauce =="":
+            return "red"
+         return sauce
+
+
+    
+
+pizza_prompt = "Would you like to order a pizza   Exit to cancel: "
+
+
+
+class Pizzaria:
+
+
+    '''the ordering system'''
+    def __init__(self):
+        self.orders = 0
+        self.price_per_top = 0.30
+        self.price_per_inch = 0.60
+        self.pizzas = []
+
+
+    def place_order(self):
+        '''order placment system'''
+    
+        while True:
+            user_input= input(pizza_prompt)
+            if user_input.lower() == 'exit':
+                print (f'Total orders for the day #{self.orders}')
+                break
+            
+            size = input("Please enter a size: ")
+            sauce = input("Please enter your sauce\nleave blank for red: ")
+            pizza = Pizza(size,sauce)
+            while True:
+                topping_inp = input("Please enter your topping\nleave blank to end: ")
+                if topping_inp == "":
+                    break
+                
+                pizza.add_toppings(topping_inp)
+    
+            
+                
+            self.pizzas.append(pizza)
+            self.orders += 1
+            self.Get_recipt()
+            
+
+    def getprice(self,pizza):
+        '''Detertime the price of the pizza'''
+ 
+        price_per_za=(pizza.get_size() * self.price_per_inch) + pizza.getammount() * self.price_per_top
+        return price_per_za
+    
+    
+
+    def Get_recipt(self):
+        total_price = 0
+        price = 0
+        ''' print out a summary'''
+        for pizza in self.pizzas:
+            price = 0
+            price = self.getprice(pizza)
+            total_price += price
+        print(f"\nYou got a pizza with:")
+        print(f"Size {pizza.get_size()}")
+        print(f'with {pizza.sauce} sauce')
+        print(f"and with some {' ,'.join(pizza.get_toppings())}")
+        print(f"toppings cost{(pizza.getammount())* self.price_per_top}")
+        print(f"The total price is {total_price}")
+        print(f"you are order number #{self.orders}")
+
+
+Pj = Pizzaria()
+Pj.place_order()
